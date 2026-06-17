@@ -8,6 +8,7 @@ import {Session} from "./logging/submodules/session";
 import {Status} from "./logging/submodules/status";
 
 import {tryOEmbed, sanitizeProviderHtml, isOEmbedProviderUrl, OEmbedData} from "./contentCapture/oembedExtractor";
+import {initTheme, cycleTheme, ThemeChoice} from "./theme/themeManager";
 
 // Renderer page script - connects to service worker via port
 // and handles scroll/capture commands. Content HTML arrives inline
@@ -47,6 +48,27 @@ let previewFrame = document.getElementById("preview-frame") as HTMLIFrameElement
 let previewFrameWrap = document.getElementById("preview-frame-wrap") as HTMLDivElement;
 let previewContainer = document.getElementById("preview-container") as HTMLDivElement;
 let previewArea = document.getElementById("preview-area") as HTMLDivElement;
+
+// Apply the persisted color theme and wire the header toggle, which cycles
+// System -> Light -> Dark. System mode reacts to OS theme changes via CSS, so no
+// JS listener is needed here (see theme/themeManager.ts).
+let currentThemeChoice: ThemeChoice = initTheme();
+(function setupThemeToggle() {
+	let themeToggle = document.getElementById("theme-toggle") as HTMLButtonElement | null;
+	if (!themeToggle) { return; }
+	let themeLabels: Record<ThemeChoice, string> = { system: "System", light: "Light", dark: "Dark" };
+	function reflect(choice: ThemeChoice) {
+		themeToggle.setAttribute("data-choice", choice);
+		let label = "Theme: " + themeLabels[choice];
+		themeToggle.setAttribute("aria-label", label);
+		themeToggle.setAttribute("title", label);
+	}
+	reflect(currentThemeChoice);
+	themeToggle.addEventListener("click", function() {
+		currentThemeChoice = cycleTheme(currentThemeChoice);
+		reflect(currentThemeChoice);
+	});
+})();
 
 // Arrow / Page / Home / End scrolling for the article preview iframe — driven
 // from the wrapper div so the iframe's contentDocument never receives focus.

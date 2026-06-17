@@ -13,13 +13,15 @@
         "build:prod": "gulp full --production",
         "full": "gulp full",
         "clean": "gulp clean",
-        "lint": "gulp lint"
+        "lint": "gulp lint",
+        "generate:tokens": "node tools/generateFluentTokens.mjs"
     },
     "repository": {
         "type": "git",
         "url": "git+https://github.com/OneNoteDev/WebClipper.git"
     },
     "devDependencies": {
+        "@fluentui/tokens": "^1.0.0-alpha.23",
         "@mozilla/readability": "^0.6.0",
         "@types/chrome": "0.1.42",
         "@types/pdf": "0.0.31",

@@ -67,13 +67,24 @@ gulp.task("clean", gulp.series("cleanInternal", function cleanRoots() {
 ////////////////////////////////////////
 // COMPILE CSS
 ////////////////////////////////////////
+// Regenerates the Fluent 2 design-token CSS (src/styles/generated/_fluent-tokens.css)
+// from @fluentui/tokens before LESS compiles, so color is always sourced from the
+// official tokens rather than hand-copied hex.
+gulp.task("generateTokens", function generateTokens(done) {
+    var script = require("path").join(__dirname, "tools", "generateFluentTokens.mjs");
+    var proc = spawn(process.execPath, [script], { stdio: "inherit" });
+    proc.on("close", function (code) {
+        done(code === 0 ? null : new Error("generateFluentTokens exited with code " + code));
+    });
+});
+
 gulp.task("compileLess", function() {
     return gulp.src(PATHS.SRC.ROOT + "styles/renderer.less")
         .pipe(less())
         .pipe(gulp.dest(PATHS.BUILDROOT + "css"));
 });
 
-gulp.task("compileCss", gulp.series("compileLess"));
+gulp.task("compileCss", gulp.series("generateTokens", "compileLess"));
 
 ////////////////////////////////////////
 // COMPILE

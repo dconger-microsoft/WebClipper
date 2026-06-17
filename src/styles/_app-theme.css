@@ -1,0 +1,68 @@
+/* App-specific theme variables — surfaces the Fluent 2 token set doesn't cover
+ * (preview chrome, scrollbars, overlay shadow, region controls, and the icon
+ * data-URIs / filters that must re-tint per theme).
+ *
+ * Fluent color tokens themselves are generated into generated/_fluent-tokens.css.
+ * Both partials are inline-imported at the top of renderer.less; components consume
+ * these via var(--app*). Light is the default; dark applies via the OS preference
+ * (when the user hasn't chosen) and via the explicit [data-theme="dark"] override. */
+
+:root,
+:root[data-theme="light"] {
+	--appPreviewCanvas: #e8e6e4;
+	--appPreviewSurface: #ffffff;
+	--appPreviewFrameBorder: rgba(0, 0, 0, 0.08);
+	--appScrollbarThumb: rgba(0, 0, 0, 0.2);
+	--appOverlayShadow: 0 4px 8px rgba(0, 0, 0, 0.12), 0 0 2px rgba(0, 0, 0, 0.1);
+	--appCaptureOverlayScrim: rgba(0, 0, 0, 0.6);
+	--appRegionControlBackground: rgba(0, 0, 0, 0.05);
+	--appRegionControlBackgroundHover: rgba(0, 0, 0, 0.1);
+	--appRegionControlBorder: rgba(0, 0, 0, 0.08);
+	--appModeIconFilter: brightness(0);
+	--appModeIconSelectedFilter: brightness(0) saturate(100%) invert(15%) sepia(84%) saturate(4421%) hue-rotate(277deg) brightness(88%) contrast(92%);
+	--appSectionChevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 4.5l3.5 3.5 3.5-3.5' stroke='%23424242' stroke-width='1.2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+	--appTrashIcon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath fill='%23242424' d='M6.5 1a1.5 1.5 0 0 0-1.5 1.5V3H3a.5.5 0 0 0 0 1h.5v8.5A1.5 1.5 0 0 0 5 14h6a1.5 1.5 0 0 0 1.5-1.5V4h.5a.5.5 0 0 0 0-1h-2v-.5A1.5 1.5 0 0 0 9.5 1h-3zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5zM4.5 4h7v8.5a.5.5 0 0 1-.5.5H5a.5.5 0 0 1-.5-.5V4zm2 2a.5.5 0 0 0-.5.5v4a.5.5 0 0 0 1 0v-4a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v4a.5.5 0 0 0 1 0v-4a.5.5 0 0 0-.5-.5z'/%3E%3C/svg%3E");
+	--appStatusSuccessIcon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cpath fill='%230e700e' d='M5 3a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H5zm9.05 5.55l-5 5a.5.5 0 0 1-.71 0l-2.5-2.5a.5.5 0 1 1 .71-.71L8.7 12.5l4.64-4.65a.5.5 0 0 1 .71.7z'/%3E%3C/svg%3E");
+	--appStatusErrorIcon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cpath fill='%23c50f1f' d='M10 2a8 8 0 1 0 0 16 8 8 0 0 0 0-16zm0 3a.75.75 0 0 1 .75.75v5a.75.75 0 0 1-1.5 0v-5A.75.75 0 0 1 10 5zm0 10a1 1 0 1 1 0-2 1 1 0 0 1 0 2z'/%3E%3C/svg%3E");
+}
+
+/* System preference drives dark when the user hasn't explicitly chosen a theme. */
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme]),
+	:root[data-theme="system"] {
+		--appPreviewCanvas: #1f1f1f;
+		--appPreviewSurface: #292929;
+		--appPreviewFrameBorder: rgba(255, 255, 255, 0.12);
+		--appScrollbarThumb: rgba(255, 255, 255, 0.28);
+		--appOverlayShadow: 0 4px 8px rgba(0, 0, 0, 0.4), 0 0 2px rgba(0, 0, 0, 0.3);
+		--appCaptureOverlayScrim: rgba(0, 0, 0, 0.72);
+		--appRegionControlBackground: rgba(255, 255, 255, 0.08);
+		--appRegionControlBackgroundHover: rgba(255, 255, 255, 0.14);
+		--appRegionControlBorder: rgba(255, 255, 255, 0.12);
+		--appModeIconFilter: none;
+		--appModeIconSelectedFilter: none;
+		--appSectionChevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 4.5l3.5 3.5 3.5-3.5' stroke='%23d6d6d6' stroke-width='1.2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+		--appTrashIcon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath fill='%23ffffff' d='M6.5 1a1.5 1.5 0 0 0-1.5 1.5V3H3a.5.5 0 0 0 0 1h.5v8.5A1.5 1.5 0 0 0 5 14h6a1.5 1.5 0 0 0 1.5-1.5V4h.5a.5.5 0 0 0 0-1h-2v-.5A1.5 1.5 0 0 0 9.5 1h-3zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5zM4.5 4h7v8.5a.5.5 0 0 1-.5.5H5a.5.5 0 0 1-.5-.5V4zm2 2a.5.5 0 0 0-.5.5v4a.5.5 0 0 0 1 0v-4a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v4a.5.5 0 0 0 1 0v-4a.5.5 0 0 0-.5-.5z'/%3E%3C/svg%3E");
+		--appStatusSuccessIcon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cpath fill='%2354b054' d='M5 3a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H5zm9.05 5.55l-5 5a.5.5 0 0 1-.71 0l-2.5-2.5a.5.5 0 1 1 .71-.71L8.7 12.5l4.64-4.65a.5.5 0 0 1 .71.7z'/%3E%3C/svg%3E");
+		--appStatusErrorIcon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cpath fill='%23dc626d' d='M10 2a8 8 0 1 0 0 16 8 8 0 0 0 0-16zm0 3a.75.75 0 0 1 .75.75v5a.75.75 0 0 1-1.5 0v-5A.75.75 0 0 1 10 5zm0 10a1 1 0 1 1 0-2 1 1 0 0 1 0 2z'/%3E%3C/svg%3E");
+	}
+}
+
+/* Explicit user override via the in-app theme toggle. */
+:root[data-theme="dark"] {
+	--appPreviewCanvas: #1f1f1f;
+	--appPreviewSurface: #292929;
+	--appPreviewFrameBorder: rgba(255, 255, 255, 0.12);
+	--appScrollbarThumb: rgba(255, 255, 255, 0.28);
+	--appOverlayShadow: 0 4px 8px rgba(0, 0, 0, 0.4), 0 0 2px rgba(0, 0, 0, 0.3);
+	--appCaptureOverlayScrim: rgba(0, 0, 0, 0.72);
+	--appRegionControlBackground: rgba(255, 255, 255, 0.08);
+	--appRegionControlBackgroundHover: rgba(255, 255, 255, 0.14);
+	--appRegionControlBorder: rgba(255, 255, 255, 0.12);
+	--appModeIconFilter: none;
+	--appModeIconSelectedFilter: none;
+	--appSectionChevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 4.5l3.5 3.5 3.5-3.5' stroke='%23d6d6d6' stroke-width='1.2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+	--appTrashIcon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath fill='%23ffffff' d='M6.5 1a1.5 1.5 0 0 0-1.5 1.5V3H3a.5.5 0 0 0 0 1h.5v8.5A1.5 1.5 0 0 0 5 14h6a1.5 1.5 0 0 0 1.5-1.5V4h.5a.5.5 0 0 0 0-1h-2v-.5A1.5 1.5 0 0 0 9.5 1h-3zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5zM4.5 4h7v8.5a.5.5 0 0 1-.5.5H5a.5.5 0 0 1-.5-.5V4zm2 2a.5.5 0 0 0-.5.5v4a.5.5 0 0 0 1 0v-4a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v4a.5.5 0 0 0 1 0v-4a.5.5 0 0 0-.5-.5z'/%3E%3C/svg%3E");
+	--appStatusSuccessIcon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cpath fill='%2354b054' d='M5 3a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H5zm9.05 5.55l-5 5a.5.5 0 0 1-.71 0l-2.5-2.5a.5.5 0 1 1 .71-.71L8.7 12.5l4.64-4.65a.5.5 0 0 1 .71.7z'/%3E%3C/svg%3E");
+	--appStatusErrorIcon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cpath fill='%23dc626d' d='M10 2a8 8 0 1 0 0 16 8 8 0 0 0 0-16zm0 3a.75.75 0 0 1 .75.75v5a.75.75 0 0 1-1.5 0v-5A.75.75 0 0 1 10 5zm0 10a1 1 0 1 1 0-2 1 1 0 0 1 0 2z'/%3E%3C/svg%3E");
+}
